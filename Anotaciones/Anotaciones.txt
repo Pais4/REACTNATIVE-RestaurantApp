@@ -1,0 +1,37 @@
+************************ INSTALACIONES NECESARIAS ************************
+1. Instalar las extensiones para VSC
+2. Instalar NodeJs
+4. Instalar Yarn si queremos 
+	- https://classic.yarnpkg.com/es-ES/docs/install#mac-stable
+3. Instalar Expo CLI
+	- https://reactnative.dev/docs/environment-setup
+	- npm install -g expo-cli
+4. Instalar emuladores virtuales
+5. Loggearse con expo
+	- expo login
+
+************************ PRIMEROS PASOS - EXPO ************************
+-> npm start ( Correr la aplicacion )
+-> Subir el proyecto a expo
+    - npm start
+    - Publish or republish proyect
+    - Esto empezara a publicar el proyecto y quedara disponible en la cuenta de expo
+
+************************ PAQUETES ************************
+-> React Navigation
+	- npm install @react-navigation/native
+	- Añadimos las dependencias
+		- expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view
+	- Instalamos Stack ( Sirve para tener varias Screens en un mismo sitio )
+		- npm install @react-navigation/stack
+		- npm install react-native-screens
+	- Instalamos el tab navigation
+		- npm install @react-navigation/bottom-tabs
+
+-> React Native Elements ( Es como el bootstrap )
+	- https://react-native-elements.github.io/react-native-elements/docs/
+		- npm install react-native-elements
+
+-> Firebase
+	- npm i firebase
+	- Configuramos firebase
