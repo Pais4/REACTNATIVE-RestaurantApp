@@ -12,12 +12,12 @@ import { UserLoggedScreen } from "./UserLoggedScreen";
 export const AccountScreen = () => {
   const [login, setLogin] = useState(null);
 
-  // useEffect(() => {
-  //   firebase.auth().onAuthStateChanged((user) => {
-  //     console.log(user);
-  //     !user ? setLogin(false) : setLogin(true);
-  //   });
-  // }, []);
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      console.log(user);
+      !user ? setLogin(false) : setLogin(true);
+    });
+  }, []);
 
   if (login === null)
     return <LoadingComponent isVisible={true} text="Cargando.." />;
