@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 import * as firebase from "firebase";
 
 /* Componentes */
-import { LoadingComponent } from "../../components/Loading";
+import { LoadingComponent } from "../../components/LoadingComponent";
 
 /* Screens */
 import { UserGuestScreen } from "./UserGuestScreen";

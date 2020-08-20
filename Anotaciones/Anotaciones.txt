@@ -35,3 +35,7 @@
 -> Firebase
 	- npm i firebase
 	- Configuramos firebase
+
+-> Keyboard aware scroll view (Para que suba la pantalla al tocar un input)
+	- https://github.com/APSL/react-native-keyboard-aware-scroll-view
+	- npm i react-native-keyboard-aware-scroll-view --save

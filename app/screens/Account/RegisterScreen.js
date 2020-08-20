@@ -1,18 +1,22 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
+/* Componentes */
+import { RegisterFormComponent } from "../../components/Account/RegisterFormComponent";
 
 export const RegisterScreen = () => {
   return (
-    <View>
+    <KeyboardAwareScrollView>
       <Image
         source={require("../../../assets/img/5-tenedores-letras-icono-logo.png")}
         resizeMode="contain"
         style={styles.logo}
       />
       <View>
-        <Text style={styles.viewForm}>Register Form</Text>
+        <RegisterFormComponent />
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 
@@ -23,7 +27,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   viewForm: {
-    marginRight: 40,
-    marginLeft: 40,
+    marginRight: 60,
+    marginLeft: 60,
   },
 });
