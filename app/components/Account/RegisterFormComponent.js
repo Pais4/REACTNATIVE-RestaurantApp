@@ -1,17 +1,42 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Input, Icon, Button } from "react-native-elements";
+import { size, isEmpty } from "lodash";
 
 /* Utils */
 import { validateEmail } from "../../utils/validations";
 
-export const RegisterFormComponent = () => {
+export const RegisterFormComponent = (props) => {
+  const { toastRef } = props;
+
   const [showPassword, setShowPassword] = useState(true);
   const [showRepeatPassword, setShowRepeatPassword] = useState(true);
   const [formData, setFormData] = useState(defaultFormValue());
 
   const onSubmit = () => {
-    console.log(validateEmail(formData.email));
+    if (
+      isEmpty(formData.email) ||
+      isEmpty(formData.password) ||
+      isEmpty(formData.repeatPassword)
+    ) {
+      return toastRef.current.show("Todos los campos son obligatorios");
+    }
+
+    if (!validateEmail(formData.email)) {
+      return toastRef.current.show("Email invalido");
+    }
+
+    if (formData.password !== formData.repeatPassword) {
+      return toastRef.current.show("Las contraseñas tienen que ser iguales");
+    }
+
+    if (size(formData.password) < 6) {
+      return toastRef.current.show(
+        "La contraseña debe ser mayor a 6 caracteres"
+      );
+    }
+
+    console.log("ok");
   };
 
   /* Recibe el evento y el tipo del evento */

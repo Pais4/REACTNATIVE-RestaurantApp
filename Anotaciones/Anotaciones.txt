@@ -39,3 +39,11 @@
 -> Keyboard aware scroll view (Para que suba la pantalla al tocar un input)
 	- https://github.com/APSL/react-native-keyboard-aware-scroll-view
 	- npm i react-native-keyboard-aware-scroll-view --save
+
+-> Lodash (Funciones ya creadas que facilitan el desarrollo)
+	- https://lodash.com/
+	- npm i --save lodash
+
+-> Easy Toast
+	- https://github.com/crazycodeboy/react-native-easy-toast
+	- npm i react-native-easy-toast --save
