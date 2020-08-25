@@ -35,6 +35,7 @@
 -> Firebase
 	- npm i firebase
 	- Configuramos firebase
+	- Configuramos el Storage en firebase
 
 -> Keyboard aware scroll view (Para que suba la pantalla al tocar un input)
 	- https://github.com/APSL/react-native-keyboard-aware-scroll-view
@@ -47,3 +48,15 @@
 -> Easy Toast
 	- https://github.com/crazycodeboy/react-native-easy-toast
 	- npm i react-native-easy-toast --save
+
+-> Facebook Expo
+	- yarn add expo-facebook
+	- Creamos el proyecto en facebook developers
+
+-> Image Picker
+	- yarn add expo-image-picker
+
+************************ PERMISOS ************************
+-> Permiso para acceder a la galeria
+	- yarn add expo-permissions
+	

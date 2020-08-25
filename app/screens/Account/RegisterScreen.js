@@ -21,9 +21,8 @@ export const RegisterScreen = () => {
       </View>
       <Toast
         ref={toastRef}
-        position="center"
         opacity={0.9}
-        position="bottom"
+        position="center"
         style={styles.toast}
       />
     </KeyboardAwareScrollView>
@@ -34,7 +33,7 @@ const styles = StyleSheet.create({
   logo: {
     width: "100%",
     height: 150,
-    marginTop: 20,
+    marginTop: 40,
   },
   viewForm: {
     marginRight: 60,

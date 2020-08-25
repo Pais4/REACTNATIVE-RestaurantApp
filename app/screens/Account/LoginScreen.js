@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useRef } from "react";
 import { StyleSheet, View, ScrollView, Text, Image } from "react-native";
 import { Divider } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
+import Toast from "react-native-easy-toast";
+
+/* Componentes */
+import { LoginFormComponent } from "../../components/Account/LoginFormComponent";
 
 export const LoginScreen = () => {
+  const toastRef = useRef();
+
   return (
     <ScrollView>
       <Image
@@ -12,11 +18,12 @@ export const LoginScreen = () => {
         style={styles.logo}
       />
       <View style={styles.viewContainer}>
-        <Text>Login Screen</Text>
+        <LoginFormComponent toastRef={toastRef} />
         <CreateAccount />
       </View>
       <Divider style={styles.divider} />
       <Text>Social Login</Text>
+      <Toast ref={toastRef} position="center" opacity={0.9} />
     </ScrollView>
   );
 };
@@ -42,7 +49,7 @@ const styles = StyleSheet.create({
   logo: {
     width: "100%",
     height: 150,
-    marginTop: 20,
+    marginTop: 40,
   },
   viewContainer: {
     marginRight: 40,
