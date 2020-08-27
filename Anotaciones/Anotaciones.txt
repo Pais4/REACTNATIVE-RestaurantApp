@@ -56,6 +56,12 @@
 -> Image Picker
 	- yarn add expo-image-picker
 
+-> React native maps
+	- yarn add react-native-maps
+
+-> Expo locations
+	- npm i expo-location
+
 ************************ PERMISOS ************************
 -> Permiso para acceder a la galeria
 	- yarn add expo-permissions

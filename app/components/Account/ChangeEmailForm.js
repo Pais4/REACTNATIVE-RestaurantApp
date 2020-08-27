@@ -1,13 +1,61 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Input, Button } from 'react-native-elements';
+import * as firebase from 'firebase';
+
+/* Utils */
+import { validateEmail } from '../../utils/validations';
+import { reauthenticate } from '../../utils/api';
 
 export const ChangeEmailForm = (props) => {
 
     const { email, setShowModal, toastRef, setReloadUserInfo } = props;
+    const [formData, setFormData] = useState(defaultFormData());
+    const [showPassword, setShowPassword] = useState(true);
+    const [errors, setErrors] = useState({})
+    const [isLoading, setIsLoading] = useState(false)
+
+    const onChange = (e, type) => {
+        setFormData({
+            ...formData,
+            [type]: e.nativeEvent.text
+        })
+    }
 
     const onSubmit = () => {
-        console.log('Formulario Enviado');
+        setErrors({});
+
+        if( !formData.email || email === formData.email ) {
+            setErrors({email: 'El email no ha cambiado.'})
+        } else if (!validateEmail(formData.email)) {
+            setErrors({email: 'El email es incorrecto.'})
+        } else if (!formData.password) {
+            setErrors({password: 'La contraseña es necesaria'})
+        } else {
+            setIsLoading(true);
+            reauthenticate(formData.password)
+                .then(() => {
+                    firebase
+                        .auth()
+                        .currentUser.updateEmail(formData.email)
+                        .then(() => {
+                            setIsLoading(false);
+                            setReloadUserInfo(true);
+                            toastRef.current.show('Email actualizado correctamente');
+                            setShowModal(false);
+                        })
+                        .catch((err) => {
+                            console.log(err)
+                            setErrors({email: 'Error al actualizar el email'});
+                            setIsLoading(false);
+                        });
+                })
+                .catch((err) => {
+                    setIsLoading(false)
+                    setErrors({password: 'La contraseña es incorrecta.'})
+                })
+        }
+
     }
 
     return (
@@ -21,26 +69,37 @@ export const ChangeEmailForm = (props) => {
                     name: 'at',
                     color: '#c2c2c2'
                 }}
+                onChange={(e) => onChange(e, 'email')}
+                errorMessage={errors.email}
             />
             <Input 
                 placeholder='Contraseña'
                 containerStyle={styles.input}
-                secureTextEntry={true}
+                secureTextEntry={showPassword}
                 rightIcon={{
                     type: 'material-community',
-                    name: 'eye-outline',
-                    color: '#c2c2c2'
+                    name: showPassword ? 'eye-outline' : 'eye-off-outline',
+                    color: '#c2c2c2',
+                    onPress: () => setShowPassword(!showPassword)
                 }}
+                onChange={(e) => onChange(e, 'password')}
+                errorMessage={errors.password}
             />
             <Button 
                 title='Cambiar email'
                 containerStyle={styles.btnContainer}
                 buttonStyle= {styles.btn}
                 onPress={onSubmit}
+                loading={isLoading}
             />
         </View>
     )
 }
+
+const defaultFormData = () => ({
+    email: '',
+    password: ''
+})
 
 const styles = StyleSheet.create({
     view: {
