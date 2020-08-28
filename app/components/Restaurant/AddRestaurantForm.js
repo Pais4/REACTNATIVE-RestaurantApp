@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ScrollView, Alert, Dimensions, Text } from 'react-native';
 import { Icon, Avatar, Image, Input, Button } from 'react-native-elements';
+import { map, size, filter } from 'lodash';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
-import { map, size, filter } from 'lodash';
+import * as Location from 'expo-location';
+import MapView from 'react-native-maps';
 import { ModalComponent } from '../ModalComponent';
 
 /* Obtener las medidas de la pantalla */
@@ -112,10 +114,57 @@ const FormAdd = (props) => {
 const MapComponent = (props) => {
 
     const { isVisibleMap, setIsVisibleMap } = props;
+    const [location, setLocation] = useState(null);
+
+    useEffect(() => {
+        
+        /* Funcion anonima asincrona auto ejecutable */
+        (async () => {
+
+            const resultPermissions = await Permissions.askAsync(
+                Permissions.LOCATION
+            );
+
+            const statusPermissions = resultPermissions.permissions.location.status;
+
+            if( statusPermissions !== 'granted') {
+                toastRef.current.show('Tienes que aceptar los permisos de localizacion', 3000)
+            } else {
+                const loc = await Location.getCurrentPositionAsync({});
+                setLocation({
+                    latitude: loc.coords.latitude,
+                    longitude: loc.coords.longitude,
+                    latitudeDelta: 0.001,
+                    longitudeDelta: 0.001
+                })
+            }
+
+        })()
+
+    }, [])
 
     return(
         <ModalComponent isVisible={isVisibleMap} setIsVisible={setIsVisibleMap} >
-            <Text>Mapa</Text>
+            <View>
+                {
+                    location && (
+                        <MapView 
+                            style={styles.mapStyles}
+                            initialRegion={location}
+                            showsUserLocation={true}
+                            onRegionChange={(region) => setLocation(region)}
+                        >
+                            <MapView.Marker 
+                                coordinate={{
+                                    latitude: location.latitude,
+                                    longitude: location.longitude
+                                }}
+                                draggable
+                            />
+                        </MapView>
+                    )
+                }
+            </View>
         </ModalComponent>
     )
 }
@@ -247,5 +296,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: 200,
         marginBottom: 20
+    },
+    mapStyles: {
+        width:'100%',
+        height: 550
     }
 })
