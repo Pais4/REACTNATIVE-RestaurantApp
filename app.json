@@ -20,6 +20,12 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.tecnovadigital.restaurantapp",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBR5D6Xz7AFxEyaAMWCmE9N8ROzWJruESo"
+        }
+      },
       "permissions":[
         "CAMERA_ROLL",
         "READ_EXTERNAL_STORAGE", 
@@ -35,3 +41,5 @@
     "description": ""
   }
 }
+
+

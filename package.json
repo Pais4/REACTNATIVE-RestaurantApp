@@ -20,6 +20,7 @@
     "expo-status-bar": "^1.0.2",
     "firebase": "^7.18.0",
     "lodash": "^4.17.20",
+    "random-uuid-v4": "0.0.9",
     "react": "~16.11.0",
     "react-dom": "~16.11.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
@@ -31,7 +32,8 @@
     "react-native-reanimated": "~1.9.0",
     "react-native-safe-area-context": "~3.0.7",
     "react-native-screens": "^2.9.0",
-    "react-native-web": "~0.11.7"
+    "react-native-web": "~0.11.7",
+    "uuid": "^8.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",

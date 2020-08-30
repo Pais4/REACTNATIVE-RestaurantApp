@@ -58,11 +58,24 @@
 
 -> React native maps
 	- yarn add react-native-maps
+	- Tenemos que configurar la API de google maps 
+	https://docs.expo.io/versions/latest/sdk/map-view/
 
 -> Expo locations
 	- npm i expo-location
+
+-> UUID ( Generar id's unicos )
+	- npm i random-uuid-v4
 
 ************************ PERMISOS ************************
 -> Permiso para acceder a la galeria
 	- yarn add expo-permissions
 	
+API KEY
+AIzaSyBR5D6Xz7AFxEyaAMWCmE9N8ROzWJruESo
+
+Accessing credentials for pais4 in project 5-tenedores
+Google Certificate Fingerprint:     04:25:C5:18:EA:A9:27:C1:C0:C1:B1:11:0D:1C:8A:04:BB:7A:E5:7B
+Google Certificate Hash (SHA-1):    0425C518EAA927C1C0C1B1110D1C8A04BB7AE57B
+Google Certificate Hash (SHA-256):  DED60C600E31BD3518BAF54FBD11905B69274E7B74C33E1F152050525A778167
+Facebook Key Hash:                  BCXFGOqpJ8HAwbERDRyKBLt65Xs=
