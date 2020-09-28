@@ -2,10 +2,12 @@ import React from 'react';
 import { StyleSheet, Text, View, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { Image } from 'react-native-elements';
 import { size } from 'lodash';
+import { useNavigation } from '@react-navigation/native';
 
 export const ListRestaurants = (props) => {
 
-    const { restaurants } = props;
+    const { restaurants, handleLoadMore, loading } = props;
+    const navigation = useNavigation();
 
     return (
         <View>
@@ -15,8 +17,11 @@ export const ListRestaurants = (props) => {
                 (
                     <FlatList 
                         data={restaurants}
-                        renderItem={(restaurant) => <Restaurant restaurant={restaurant} />}
+                        renderItem={(restaurant) => <Restaurant restaurant={restaurant} navigation={navigation} />}
                         keyExtractor={(item, index) => index.toString()}
+                        onEndReachedThreshold={0.5}
+                        onEndReached={handleLoadMore}
+                        ListFooterComponent={<FooterList loading={loading}/>}
                     />
                 )
                 : 
@@ -33,14 +38,17 @@ export const ListRestaurants = (props) => {
 
 const Restaurant = (props) => {
 
-    const {restaurant} = props;
+    const { restaurant, navigation } = props;
 
-    const { images, name, description, address } = restaurant.item;
+    const { images, name, description, address, id } = restaurant.item;
 
     const imageRestaurant = images[0];
 
     const goRestaurantScreen = () => {
-        console.log('RestaurantScreen')
+        navigation.navigate('restaurant', {
+            id,
+            name
+        });
     }
 
     return(
@@ -71,10 +79,37 @@ const Restaurant = (props) => {
     )
 }
 
+const FooterList = (props) => {
+
+    const { loading } = props;
+
+    if ( loading ) {
+
+        return(
+            <View style={styles.loaderRestaurants}>
+                <ActivityIndicator size='large' />
+            </View>
+        )
+
+    } else {
+
+        return (
+            <View style={styles.notFoundRestaurants}>
+                <Text>No quedan restaurantes por cargar...</Text>
+            </View>
+        )
+    }
+}
+
 const styles = StyleSheet.create({
     loaderRestaurants: {
         marginTop: 10,
         marginBottom: 10, 
+        alignItems: 'center'
+    },
+    notFoundRestaurants: {
+        marginTop: 10,
+        marginBottom: 20,
         alignItems: 'center'
     },
     viewRestaurant: {

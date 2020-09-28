@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Icon } from "react-native-elements";
+import { useFocusEffect } from '@react-navigation/native';
 import { firebaseApp } from '../../utils/firebase';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
@@ -17,7 +18,8 @@ export const RestaurantsScreen = (props) => {
   const [user, setUser] = useState(null);
   const [restaurants, setRestaurants] = useState([]);
   const [totalRestaurants, setTotalRestaurants] = useState(0);
-  const [startRestaurants, setStartRestaurants] = useState(null)
+  const [startRestaurants, setStartRestaurants] = useState(null);
+  const [loading, setLoading] = useState(false);
   const limitRestautant = 10;
 
   useEffect(() => {
@@ -28,9 +30,10 @@ export const RestaurantsScreen = (props) => {
 
   }, []);
 
-  useEffect(() => {
-    
-    db.collection('restaurants').get()
+  /* Cuando se haga focus en la screen se va a ejecutar este Effect */
+  useFocusEffect(
+    useCallback(() => {
+      db.collection('restaurants').get()
       .then((snap) => {
         setTotalRestaurants(snap.size)
       })
@@ -50,12 +53,41 @@ export const RestaurantsScreen = (props) => {
           setRestaurants(resultRestaurants);
         })
       })
-  }, [])
+    }, [])
+  )
+
+  const handleLoadMore = () => {
+
+    const resultRestaurants = [];
+
+    restaurants.length < totalRestaurants && setLoading(true);
+
+    db.collection('restaurants')
+      .orderBy('createAt', 'desc')
+      .startAfter(startRestaurants.data().createAt)
+      .limit(limitRestautant)
+      .get()
+      .then((response) => {
+        if( response.docs.length > 0 ) {
+          setStartRestaurants(response.docs[response.docs.length - 1]);
+        } else {
+          setLoading(false);
+        }
+
+        response.forEach((doc) => {
+          const restaurant = doc.data();
+          restaurant.id = doc.id;
+          resultRestaurants.push(restaurant);
+        })
+        setRestaurants([...restaurants, ...resultRestaurants]);
+      })
+
+  }
 
   return (
     <View style={styles.viewBody}>
       
-      <ListRestaurants restaurants={restaurants} />
+      <ListRestaurants restaurants={restaurants} handleLoadMore={handleLoadMore} loading={loading} />
 
       {user &&
         <Icon 
