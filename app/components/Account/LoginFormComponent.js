@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Icon, Input, Button } from "react-native-elements";
 import { isEmpty } from "lodash";
-import { useNavigation } from "@react-navigation/native";
+//import { useNavigation } from "@react-navigation/native";
 import * as firebase from "firebase";
 
 /* Components */
@@ -13,7 +13,7 @@ import { validateEmail } from "../../utils/validations";
 
 export const LoginFormComponent = (props) => {
   const { toastRef } = props;
-  const navigation = useNavigation();
+  //const navigation = useNavigation();
 
   const [showPassword, setShowPassword] = useState(true);
   const [formData, setFormData] = useState(defaultFormValue);
@@ -41,7 +41,7 @@ export const LoginFormComponent = (props) => {
       .signInWithEmailAndPassword(formData.email, formData.password)
       .then(() => {
         setLoading(false);
-        navigation.navigate("account");
+        //navigation.navigate("account");
       })
       .catch(() => {
         setLoading(false);
@@ -90,6 +90,7 @@ export const LoginFormComponent = (props) => {
         buttonStyle={styles.btnLogin}
         onPress={onSubmit}
       />
+      
       <LoadingComponent isVisible={loading} text="Iniciando Sesión..." />
     </View>
   );
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
     width: "95%",
   },
   btnLogin: {
-    backgroundColor: "#00a680",
+    backgroundColor: "#F05C3C",
   },
   iconStyle: {
     color: "#c1c1c1",
